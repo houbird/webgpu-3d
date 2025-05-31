@@ -198,23 +198,23 @@ class WebGPUBenchmarkApp {  constructor() {
     }
   }  async loadModel(url) {
     this.showLoading(true);
-    
     try {
       // 使用模型載入器
       const result = await this.modelLoader.loadModel(url);
-      
       // 移除舊模型
       if (this.model) {
         this.scene.remove(this.model);
       }
-      
       this.model = result.model;
       this.model.position.y = -1;
       this.scene.add(this.model);
-      
+      // 新增：載入成功後更新狀態
+      document.getElementById('webgpu-status').textContent = '模型載入完成';
     } catch (error) {
       console.error('載入模型失敗:', error);
       this.showError('載入模型失敗: ' + error.message);
+      // 新增：載入失敗時顯示錯誤
+      document.getElementById('webgpu-status').textContent = '模型載入失敗';
     } finally {
       this.showLoading(false);
     }
