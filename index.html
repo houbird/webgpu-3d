@@ -38,20 +38,27 @@
             FPS: --
           </div>
         </div>
-        
-        <!-- 模型上傳區域 -->
-        <div class="mt-4 p-4 border-2 border-dashed border-gray-600 rounded-lg text-center" id="upload-area">
-          <div class="upload-content">
-            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- 模型上傳區域 -->
+        <div class="mt-4">
+          <button id="upload-toggle" class="w-full bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-white flex items-center justify-between transition-colors">
+            <span>上傳自訂模型</span>
+            <svg id="upload-arrow" class="w-5 h-5 transform transition-transform" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
-            <p class="text-gray-300">拖拉檔案到此處或</p>
-            <button class="mt-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white" onclick="document.getElementById('file-input').click()">
-              選擇檔案
-            </button>
-            <p class="text-xs text-gray-500 mt-2">支援 .glb, .gltf, .obj 格式 (最大 50MB)</p>
+          </button>
+          <div id="upload-area" class="mt-2 p-4 border-2 border-dashed border-gray-600 rounded-lg text-center hidden">
+            <div class="upload-content">
+              <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <p class="text-gray-300">拖拉檔案到此處或</p>
+              <button class="mt-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white" onclick="document.getElementById('file-input').click()">
+                選擇檔案
+              </button>
+              <p class="text-xs text-gray-500 mt-2">支援 .glb, .gltf, .obj 格式 (最大 50MB)</p>
+            </div>
+            <input type="file" id="file-input" class="hidden" accept=".glb,.gltf,.obj" />
           </div>
-          <input type="file" id="file-input" class="hidden" accept=".glb,.gltf,.obj" />
         </div>
       </div>
     </div>

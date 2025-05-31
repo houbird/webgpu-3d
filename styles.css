@@ -3,6 +3,19 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* 上傳切換按鈕樣式 */
+#upload-toggle {
+  transition: all 0.3s ease;
+}
+
+#upload-toggle:hover {
+  background-color: #4b5563;
+}
+
+#upload-arrow {
+  transition: transform 0.3s ease;
+}
+
 /* 上傳區域樣式 */
 #upload-area {
   transition: all 0.3s ease;

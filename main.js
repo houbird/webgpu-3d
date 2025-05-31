@@ -56,7 +56,6 @@ class WebGPUBenchmarkApp {
       this.showError('初始化失敗: ' + error.message);
     }
   }
-
   async checkWebGPUSupport() {
     if (!navigator.gpu) {
       throw new Error('此瀏覽器不支援 WebGPU。請使用最新版本的 Chrome 或 Edge。');
@@ -71,14 +70,27 @@ class WebGPUBenchmarkApp {
     document.getElementById('webgpu-support').textContent = '支援';
     document.getElementById('webgpu-support').className = 'text-green-400';
 
-    // 嘗試獲取 GPU 資訊
+    // 嘗試獲取 GPU 資訊 - 使用更安全的方式
     try {
-      const info = await adapter.requestAdapterInfo();
-      document.getElementById('gpu-vendor').textContent = info.vendor || '未知';
-      document.getElementById('gpu-model').textContent = info.architecture || '未知';
-      document.getElementById('driver-version').textContent = info.driver || '未知';
+      // 嘗試使用 requestAdapterInfo (實驗性 API)
+      if (adapter.requestAdapterInfo) {
+        const info = await adapter.requestAdapterInfo();
+        document.getElementById('gpu-vendor').textContent = info.vendor || '未知';
+        document.getElementById('gpu-model').textContent = info.architecture || info.device || '未知';
+        document.getElementById('driver-version').textContent = info.driver || '未知';
+      } else {
+        // 備用方案：使用可用的資訊
+        const device = await adapter.requestDevice();
+        document.getElementById('gpu-vendor').textContent = '可用';
+        document.getElementById('gpu-model').textContent = 'WebGPU 相容裝置';
+        document.getElementById('driver-version').textContent = '支援';
+      }
     } catch (e) {
       console.warn('無法獲取詳細 GPU 資訊:', e);
+      // 顯示基本資訊
+      document.getElementById('gpu-vendor').textContent = '可用';
+      document.getElementById('gpu-model').textContent = 'WebGPU 相容裝置';
+      document.getElementById('driver-version').textContent = '已支援';
     }
   }
 
@@ -153,14 +165,28 @@ class WebGPUBenchmarkApp {
     this.controls.maxDistance = 20;
     this.controls.maxPolarAngle = Math.PI / 2;
   }
-
   initEventListeners() {
     // 視窗大小調整
     window.addEventListener('resize', () => this.onWindowResize());
 
+    // 上傳區域切換
+    const uploadToggle = document.getElementById('upload-toggle');
+    const uploadArea = document.getElementById('upload-area');
+    const uploadArrow = document.getElementById('upload-arrow');
+    
+    uploadToggle.addEventListener('click', () => {
+      const isHidden = uploadArea.classList.contains('hidden');
+      if (isHidden) {
+        uploadArea.classList.remove('hidden');
+        uploadArrow.style.transform = 'rotate(180deg)';
+      } else {
+        uploadArea.classList.add('hidden');
+        uploadArrow.style.transform = 'rotate(0deg)';
+      }
+    });
+
     // 檔案上傳
     const fileInput = document.getElementById('file-input');
-    const uploadArea = document.getElementById('upload-area');
 
     fileInput.addEventListener('change', (e) => this.handleFileUpload(e.target.files[0]));
 
@@ -191,33 +217,82 @@ class WebGPUBenchmarkApp {
       document.getElementById('test-duration').textContent = `${e.target.value} 秒`;
     });
   }
-
   async loadDefaultModel() {
     try {
+      document.getElementById('webgpu-status').textContent = '載入預設模型中...';
       await this.loadModel('./models/water-bottle.glb');
+      document.getElementById('webgpu-status').textContent = '預設模型載入完成';
     } catch (error) {
       console.warn('無法載入預設模型:', error);
+      document.getElementById('webgpu-status').textContent = '預設模型載入失敗';
+      // 如果預設模型載入失敗，嘗試建立一個簡單的替代物體
+      this.createFallbackModel();
     }
   }
-  
-  async loadModel(url) {
+
+  createFallbackModel() {
+    try {
+      // 建立一個簡單的立方體作為備用
+      const geometry = new THREE.BoxGeometry(2, 2, 2);
+      const material = new THREE.MeshStandardMaterial({ 
+        color: 0x4f46e5,
+        metalness: 0.7,
+        roughness: 0.3 
+      });
+      this.model = new THREE.Mesh(geometry, material);
+      this.model.position.y = 0;
+      this.model.castShadow = true;
+      this.model.receiveShadow = true;
+      this.scene.add(this.model);
+      document.getElementById('webgpu-status').textContent = '使用預設立方體';
+      console.log('已建立備用立方體模型');
+    } catch (error) {
+      console.error('建立備用模型失敗:', error);
+      document.getElementById('webgpu-status').textContent = '模型載入失敗';
+    }
+  }
+    async loadModel(url) {
     this.showLoading(true);
     try {
+      console.log('開始載入模型:', url);
+      
       // 使用模型載入器
       const result = await this.modelLoader.loadModel(url);
+      
       // 移除舊模型
       if (this.model) {
         this.scene.remove(this.model);
+        // 清理舊模型的記憶體
+        if (this.model.geometry) this.model.geometry.dispose();
+        if (this.model.material) {
+          if (Array.isArray(this.model.material)) {
+            this.model.material.forEach(mat => mat.dispose());
+          } else {
+            this.model.material.dispose();
+          }
+        }
       }
+      
       this.model = result.model;
       this.model.position.y = -1;
+      
+      // 確保模型有陰影
+      this.model.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+      
       this.scene.add(this.model);
-      // 新增：載入成功後更新狀態
+      
+      // 載入成功後更新狀態
       document.getElementById('webgpu-status').textContent = '模型載入完成';
+      console.log('模型載入成功:', result.metadata);
+      
     } catch (error) {
       console.error('載入模型失敗:', error);
       this.showError('載入模型失敗: ' + error.message);
-      // 新增：載入失敗時顯示錯誤
       document.getElementById('webgpu-status').textContent = '模型載入失敗';
     } finally {
       this.showLoading(false);
