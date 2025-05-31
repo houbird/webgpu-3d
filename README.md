@@ -35,15 +35,15 @@
 ### 檔案結構
 ```
 webgpu-3d/
-├── index.html          # 主頁面
-├── styles.css          # 自定義樣式
-├── main.js            # 應用程式入口
-├── benchmark.js       # 跑分測試模組
-├── model-loader.js    # 模型載入器
-├── utils.js           # 工具函數
-├── models/            # 3D 模型資源
+├── index.html      # 主頁面
+├── styles.css      # 自定義樣式
+├── main.js      # 應用程式入口
+├── benchmark.js     # 跑分測試模組
+├── model-loader.js  # 模型載入器
+├── utils.js       # 工具函數
+├── models/      # 3D 模型資源
 │   └── water-bottle.glb
-└── README.md          # 專案說明
+└── README.md      # 專案說明
 ```
 
 ## 🎯 使用說明
@@ -153,8 +153,8 @@ webgpu-3d/
 ```javascript
 // 在 BenchmarkModule 中添加新的測試配置
 this.testConfigs.extreme = { 
-    objects: 1000, 
-    complexity: 'extreme' 
+  objects: 1000, 
+  complexity: 'extreme' 
 };
 ```
 
@@ -169,7 +169,7 @@ this.customLoader = new CustomLoader(this.loadingManager);
 ```javascript
 // 修改 BenchmarkModule 中的 calculateOverallScore 方法
 calculateOverallScore(metrics) {
-    // 自定義評分邏輯
+  // 自定義評分邏輯
 }
 ```
 
@@ -181,9 +181,9 @@ calculateOverallScore(metrics) {
 ```css
 /* 在 styles.css 中覆寫顏色 */
 :root {
-    --primary-color: #3b82f6;    /* 藍色 */
-    --secondary-color: #10b981;  /* 綠色 */
-    --accent-color: #f59e0b;     /* 橙色 */
+  --primary-color: #3b82f6;  /* 藍色 */
+  --secondary-color: #10b981;  /* 綠色 */
+  --accent-color: #f59e0b;   /* 橙色 */
 }
 ```
 

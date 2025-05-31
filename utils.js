@@ -10,10 +10,10 @@
  * @return {string} 格式化後的字串
  */
 export function formatNumber(value, decimals = 2) {
-    if (typeof value !== 'number' || isNaN(value)) {
-        return '--';
-    }
-    return value.toFixed(decimals);
+  if (typeof value !== 'number' || isNaN(value)) {
+    return '--';
+  }
+  return value.toFixed(decimals);
 }
 
 /**
@@ -22,13 +22,13 @@ export function formatNumber(value, decimals = 2) {
  * @return {string} 格式化後的檔案大小
  */
 export function formatFileSize(bytes) {
-    if (bytes === 0) return '0 B';
-    
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  if (bytes === 0) return '0 B';
+  
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
 /**
@@ -37,17 +37,17 @@ export function formatFileSize(bytes) {
  * @return {string} 格式化後的時間
  */
 export function formatDuration(milliseconds) {
-    const seconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    
-    if (hours > 0) {
-        return `${hours}:${(minutes % 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
-    } else if (minutes > 0) {
-        return `${minutes}:${(seconds % 60).toString().padStart(2, '0')}`;
-    } else {
-        return `${seconds}s`;
-    }
+  const seconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  
+  if (hours > 0) {
+    return `${hours}:${(minutes % 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
+  } else if (minutes > 0) {
+    return `${minutes}:${(seconds % 60).toString().padStart(2, '0')}`;
+  } else {
+    return `${seconds}s`;
+  }
 }
 
 /**
@@ -57,28 +57,28 @@ export function formatDuration(milliseconds) {
  * @return {Function} 節流後的函數
  */
 export function throttle(func, wait) {
-    let timeout;
-    let previous = 0;
+  let timeout;
+  let previous = 0;
+  
+  return function(...args) {
+    const now = Date.now();
+    const remaining = wait - (now - previous);
     
-    return function(...args) {
-        const now = Date.now();
-        const remaining = wait - (now - previous);
-        
-        if (remaining <= 0 || remaining > wait) {
-            if (timeout) {
-                clearTimeout(timeout);
-                timeout = null;
-            }
-            previous = now;
-            func.apply(this, args);
-        } else if (!timeout) {
-            timeout = setTimeout(() => {
-                previous = Date.now();
-                timeout = null;
-                func.apply(this, args);
-            }, remaining);
-        }
-    };
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      func.apply(this, args);
+    } else if (!timeout) {
+      timeout = setTimeout(() => {
+        previous = Date.now();
+        timeout = null;
+        func.apply(this, args);
+      }, remaining);
+    }
+  };
 }
 
 /**
@@ -88,17 +88,17 @@ export function throttle(func, wait) {
  * @return {Function} 防抖後的函數
  */
 export function debounce(func, wait) {
-    let timeout;
-    
-    return function(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func.apply(this, args);
-        };
-        
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+  let timeout;
+  
+  return function(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func.apply(this, args);
     };
+    
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }
 
 /**
@@ -107,29 +107,29 @@ export function debounce(func, wait) {
  * @return {any} 複製後的物件
  */
 export function deepClone(obj) {
-    if (obj === null || typeof obj !== 'object') {
-        return obj;
-    }
-    
-    if (obj instanceof Date) {
-        return new Date(obj.getTime());
-    }
-    
-    if (obj instanceof Array) {
-        return obj.map(item => deepClone(item));
-    }
-    
-    if (typeof obj === 'object') {
-        const cloned = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                cloned[key] = deepClone(obj[key]);
-            }
-        }
-        return cloned;
-    }
-    
+  if (obj === null || typeof obj !== 'object') {
     return obj;
+  }
+  
+  if (obj instanceof Date) {
+    return new Date(obj.getTime());
+  }
+  
+  if (obj instanceof Array) {
+    return obj.map(item => deepClone(item));
+  }
+  
+  if (typeof obj === 'object') {
+    const cloned = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        cloned[key] = deepClone(obj[key]);
+      }
+    }
+    return cloned;
+  }
+  
+  return obj;
 }
 
 /**
@@ -138,12 +138,12 @@ export function deepClone(obj) {
  * @return {string} 隨機 ID
  */
 export function generateId(length = 8) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
 }
 
 /**
@@ -151,7 +151,7 @@ export function generateId(length = 8) {
  * @return {boolean} 是否支援 WebGPU
  */
 export function checkWebGPUSupport() {
-    return 'gpu' in navigator;
+  return 'gpu' in navigator;
 }
 
 /**
@@ -159,31 +159,31 @@ export function checkWebGPUSupport() {
  * @return {Object} 瀏覽器資訊
  */
 export function getBrowserInfo() {
-    const ua = navigator.userAgent;
-    let browser = 'Unknown';
-    let version = 'Unknown';
-    
-    if (ua.includes('Chrome')) {
-        browser = 'Chrome';
-        version = ua.match(/Chrome\/(\d+)/)?.[1] || 'Unknown';
-    } else if (ua.includes('Firefox')) {
-        browser = 'Firefox';
-        version = ua.match(/Firefox\/(\d+)/)?.[1] || 'Unknown';
-    } else if (ua.includes('Safari')) {
-        browser = 'Safari';
-        version = ua.match(/Version\/(\d+)/)?.[1] || 'Unknown';
-    } else if (ua.includes('Edge')) {
-        browser = 'Edge';
-        version = ua.match(/Edge\/(\d+)/)?.[1] || 'Unknown';
-    }
-    
-    return {
-        browser,
-        version,
-        userAgent: ua,
-        platform: navigator.platform,
-        language: navigator.language
-    };
+  const ua = navigator.userAgent;
+  let browser = 'Unknown';
+  let version = 'Unknown';
+  
+  if (ua.includes('Chrome')) {
+    browser = 'Chrome';
+    version = ua.match(/Chrome\/(\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('Firefox')) {
+    browser = 'Firefox';
+    version = ua.match(/Firefox\/(\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('Safari')) {
+    browser = 'Safari';
+    version = ua.match(/Version\/(\d+)/)?.[1] || 'Unknown';
+  } else if (ua.includes('Edge')) {
+    browser = 'Edge';
+    version = ua.match(/Edge\/(\d+)/)?.[1] || 'Unknown';
+  }
+  
+  return {
+    browser,
+    version,
+    userAgent: ua,
+    platform: navigator.platform,
+    language: navigator.language
+  };
 }
 
 /**
@@ -191,23 +191,23 @@ export function getBrowserInfo() {
  * @return {Object} 系統資訊
  */
 export function getSystemInfo() {
-    const info = {
-        cores: navigator.hardwareConcurrency || 'Unknown',
-        memory: 'Unknown',
-        platform: navigator.platform,
-        online: navigator.onLine
+  const info = {
+    cores: navigator.hardwareConcurrency || 'Unknown',
+    memory: 'Unknown',
+    platform: navigator.platform,
+    online: navigator.onLine
+  };
+  
+  // 嘗試獲取記憶體資訊
+  if (performance.memory) {
+    info.memory = {
+      used: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024),
+      total: Math.round(performance.memory.totalJSHeapSize / 1024 / 1024),
+      limit: Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)
     };
-    
-    // 嘗試獲取記憶體資訊
-    if (performance.memory) {
-        info.memory = {
-            used: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024),
-            total: Math.round(performance.memory.totalJSHeapSize / 1024 / 1024),
-            limit: Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)
-        };
-    }
-    
-    return info;
+  }
+  
+  return info;
 }
 
 /**
@@ -217,18 +217,18 @@ export function getSystemInfo() {
  * @return {string} 十六進位顏色
  */
 export function createGradientColor(value, colors = ['#ff0000', '#ffff00', '#00ff00']) {
-    value = Math.max(0, Math.min(1, value));
-    
-    if (colors.length < 2) return colors[0] || '#000000';
-    
-    const segmentSize = 1 / (colors.length - 1);
-    const segment = Math.floor(value / segmentSize);
-    const localValue = (value % segmentSize) / segmentSize;
-    
-    const startColor = colors[Math.min(segment, colors.length - 1)];
-    const endColor = colors[Math.min(segment + 1, colors.length - 1)];
-    
-    return interpolateColor(startColor, endColor, localValue);
+  value = Math.max(0, Math.min(1, value));
+  
+  if (colors.length < 2) return colors[0] || '#000000';
+  
+  const segmentSize = 1 / (colors.length - 1);
+  const segment = Math.floor(value / segmentSize);
+  const localValue = (value % segmentSize) / segmentSize;
+  
+  const startColor = colors[Math.min(segment, colors.length - 1)];
+  const endColor = colors[Math.min(segment + 1, colors.length - 1)];
+  
+  return interpolateColor(startColor, endColor, localValue);
 }
 
 /**
@@ -239,16 +239,16 @@ export function createGradientColor(value, colors = ['#ff0000', '#ffff00', '#00f
  * @return {string} 插值後的顏色
  */
 export function interpolateColor(color1, color2, factor) {
-    const rgb1 = hexToRgb(color1);
-    const rgb2 = hexToRgb(color2);
-    
-    if (!rgb1 || !rgb2) return color1;
-    
-    const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * factor);
-    const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * factor);
-    const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * factor);
-    
-    return `rgb(${r}, ${g}, ${b})`;
+  const rgb1 = hexToRgb(color1);
+  const rgb2 = hexToRgb(color2);
+  
+  if (!rgb1 || !rgb2) return color1;
+  
+  const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * factor);
+  const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * factor);
+  const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * factor);
+  
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
 /**
@@ -257,12 +257,12 @@ export function interpolateColor(color1, color2, factor) {
  * @return {Object|null} RGB 物件
  */
 export function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
 }
 
 /**
@@ -273,7 +273,7 @@ export function hexToRgb(hex) {
  * @return {string} 十六進位顏色
  */
 export function rgbToHex(r, g, b) {
-    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 
 /**
@@ -282,7 +282,7 @@ export function rgbToHex(r, g, b) {
  * @return {number} 向量長度
  */
 export function vectorLength(vector) {
-    return Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+  return Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 }
 
 /**
@@ -291,14 +291,14 @@ export function vectorLength(vector) {
  * @return {Object} 正規化後的向量
  */
 export function normalizeVector(vector) {
-    const length = vectorLength(vector);
-    if (length === 0) return { x: 0, y: 0, z: 0 };
-    
-    return {
-        x: vector.x / length,
-        y: vector.y / length,
-        z: vector.z / length
-    };
+  const length = vectorLength(vector);
+  if (length === 0) return { x: 0, y: 0, z: 0 };
+  
+  return {
+    x: vector.x / length,
+    y: vector.y / length,
+    z: vector.z / length
+  };
 }
 
 /**
@@ -309,7 +309,7 @@ export function normalizeVector(vector) {
  * @return {number} 插值結果
  */
 export function lerp(start, end, factor) {
-    return start + (end - start) * factor;
+  return start + (end - start) * factor;
 }
 
 /**
@@ -318,7 +318,7 @@ export function lerp(start, end, factor) {
  * @return {number} 弧度
  */
 export function degreesToRadians(degrees) {
-    return degrees * Math.PI / 180;
+  return degrees * Math.PI / 180;
 }
 
 /**
@@ -327,7 +327,7 @@ export function degreesToRadians(degrees) {
  * @return {number} 角度
  */
 export function radiansToDegrees(radians) {
-    return radians * 180 / Math.PI;
+  return radians * 180 / Math.PI;
 }
 
 /**
@@ -338,7 +338,7 @@ export function radiansToDegrees(radians) {
  * @return {number} 限制後的值
  */
 export function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
+  return Math.min(Math.max(value, min), max);
 }
 
 /**
@@ -351,7 +351,7 @@ export function clamp(value, min, max) {
  * @return {number} 映射後的值
  */
 export function map(value, inMin, inMax, outMin, outMax) {
-    return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+  return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
 /**
@@ -362,8 +362,8 @@ export function map(value, inMin, inMax, outMin, outMax) {
  * @return {number} 平滑插值結果
  */
 export function smoothstep(edge0, edge1, x) {
-    const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
-    return t * t * (3 - 2 * t);
+  const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+  return t * t * (3 - 2 * t);
 }
 
 /**
@@ -375,140 +375,140 @@ export function smoothstep(edge0, edge1, x) {
  * @return {Object} 動畫控制物件
  */
 export function animate(duration, onUpdate, onComplete, easing = (t) => t) {
-    const startTime = performance.now();
-    let animationId;
-    let cancelled = false;
+  const startTime = performance.now();
+  let animationId;
+  let cancelled = false;
+  
+  function frame() {
+    if (cancelled) return;
     
-    function frame() {
-        if (cancelled) return;
-        
-        const elapsed = performance.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easedProgress = easing(progress);
-        
-        onUpdate(easedProgress);
-        
-        if (progress < 1) {
-            animationId = requestAnimationFrame(frame);
-        } else if (onComplete) {
-            onComplete();
-        }
+    const elapsed = performance.now() - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easedProgress = easing(progress);
+    
+    onUpdate(easedProgress);
+    
+    if (progress < 1) {
+      animationId = requestAnimationFrame(frame);
+    } else if (onComplete) {
+      onComplete();
     }
-    
-    animationId = requestAnimationFrame(frame);
-    
-    return {
-        cancel() {
-            cancelled = true;
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-            }
-        }
-    };
+  }
+  
+  animationId = requestAnimationFrame(frame);
+  
+  return {
+    cancel() {
+      cancelled = true;
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    }
+  };
 }
 
 /**
  * 常用緩動函數
  */
 export const easing = {
-    linear: t => t,
-    easeInQuad: t => t * t,
-    easeOutQuad: t => t * (2 - t),
-    easeInOutQuad: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
-    easeInCubic: t => t * t * t,
-    easeOutCubic: t => (--t) * t * t + 1,
-    easeInOutCubic: t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
-    easeInSine: t => 1 - Math.cos(t * Math.PI / 2),
-    easeOutSine: t => Math.sin(t * Math.PI / 2),
-    easeInOutSine: t => -(Math.cos(Math.PI * t) - 1) / 2
+  linear: t => t,
+  easeInQuad: t => t * t,
+  easeOutQuad: t => t * (2 - t),
+  easeInOutQuad: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+  easeInCubic: t => t * t * t,
+  easeOutCubic: t => (--t) * t * t + 1,
+  easeInOutCubic: t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+  easeInSine: t => 1 - Math.cos(t * Math.PI / 2),
+  easeOutSine: t => Math.sin(t * Math.PI / 2),
+  easeInOutSine: t => -(Math.cos(Math.PI * t) - 1) / 2
 };
 
 /**
  * 本地儲存輔助函數
  */
 export const storage = {
-    set(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch (e) {
-            console.warn('儲存失敗:', e);
-            return false;
-        }
-    },
-    
-    get(key, defaultValue = null) {
-        try {
-            const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : defaultValue;
-        } catch (e) {
-            console.warn('讀取失敗:', e);
-            return defaultValue;
-        }
-    },
-    
-    remove(key) {
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch (e) {
-            console.warn('刪除失敗:', e);
-            return false;
-        }
-    },
-    
-    clear() {
-        try {
-            localStorage.clear();
-            return true;
-        } catch (e) {
-            console.warn('清空失敗:', e);
-            return false;
-        }
+  set(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (e) {
+      console.warn('儲存失敗:', e);
+      return false;
     }
+  },
+  
+  get(key, defaultValue = null) {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultValue;
+    } catch (e) {
+      console.warn('讀取失敗:', e);
+      return defaultValue;
+    }
+  },
+  
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+      return true;
+    } catch (e) {
+      console.warn('刪除失敗:', e);
+      return false;
+    }
+  },
+  
+  clear() {
+    try {
+      localStorage.clear();
+      return true;
+    } catch (e) {
+      console.warn('清空失敗:', e);
+      return false;
+    }
+  }
 };
 
 /**
  * 事件發射器
  */
 export class EventEmitter {
-    constructor() {
-        this.events = {};
+  constructor() {
+    this.events = {};
+  }
+  
+  on(event, callback) {
+    if (!this.events[event]) {
+      this.events[event] = [];
     }
+    this.events[event].push(callback);
+  }
+  
+  off(event, callback) {
+    if (!this.events[event]) return;
     
-    on(event, callback) {
-        if (!this.events[event]) {
-            this.events[event] = [];
-        }
-        this.events[event].push(callback);
+    const index = this.events[event].indexOf(callback);
+    if (index > -1) {
+      this.events[event].splice(index, 1);
     }
+  }
+  
+  emit(event, ...args) {
+    if (!this.events[event]) return;
     
-    off(event, callback) {
-        if (!this.events[event]) return;
-        
-        const index = this.events[event].indexOf(callback);
-        if (index > -1) {
-            this.events[event].splice(index, 1);
-        }
-    }
-    
-    emit(event, ...args) {
-        if (!this.events[event]) return;
-        
-        this.events[event].forEach(callback => {
-            try {
-                callback(...args);
-            } catch (e) {
-                console.error('事件回調錯誤:', e);
-            }
-        });
-    }
-    
-    once(event, callback) {
-        const onceCallback = (...args) => {
-            callback(...args);
-            this.off(event, onceCallback);
-        };
-        this.on(event, onceCallback);
-    }
+    this.events[event].forEach(callback => {
+      try {
+        callback(...args);
+      } catch (e) {
+        console.error('事件回調錯誤:', e);
+      }
+    });
+  }
+  
+  once(event, callback) {
+    const onceCallback = (...args) => {
+      callback(...args);
+      this.off(event, onceCallback);
+    };
+    this.on(event, onceCallback);
+  }
 }

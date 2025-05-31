@@ -1,68 +1,68 @@
 /* 自定義樣式 */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* 上傳區域樣式 */
 #upload-area {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 #upload-area:hover {
-    border-color: #3b82f6;
-    background-color: rgba(59, 130, 246, 0.05);
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
 #upload-area.dragover {
-    border-color: #10b981;
-    background-color: rgba(16, 185, 129, 0.1);
-    transform: scale(1.02);
+  border-color: #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
+  transform: scale(1.02);
 }
 
 /* Canvas 樣式 */
 #webgpu-canvas {
-    display: block;
-    background: linear-gradient(45deg, #1f2937, #374151);
+  display: block;
+  background: linear-gradient(45deg, #1f2937, #374151);
 }
 
 /* 動畫效果 */
 .pulse-animation {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* 進度條動畫 */
 #progress-bar {
-    transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
 }
 
 /* 跑分結果樣式 */
 .score-display {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 1rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem 0;
 }
 
 .score-grade {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0.5rem 0;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5rem 0;
 }
 
 .grade-s { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
@@ -73,45 +73,45 @@ body {
 
 /* 性能指標圖表 */
 .performance-chart {
-    height: 100px;
-    background: linear-gradient(to right, #1f2937, #374151);
-    border-radius: 0.5rem;
-    position: relative;
-    overflow: hidden;
-    margin: 1rem 0;
+  height: 100px;
+  background: linear-gradient(to right, #1f2937, #374151);
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0;
 }
 
 .chart-bar {
-    position: absolute;
-    bottom: 0;
-    width: 3px;
-    background: linear-gradient(to top, #3b82f6, #06b6d4);
-    border-radius: 1px;
-    transition: height 0.3s ease;
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to top, #3b82f6, #06b6d4);
+  border-radius: 1px;
+  transition: height 0.3s ease;
 }
 
 /* 響應式設計 */
 @media (max-width: 768px) {
-    .container {
-        padding: 1rem;
-    }
-    
-    .grid {
-        grid-template-columns: 1fr;
-    }
-    
-    #webgpu-canvas {
-        height: 300px;
-    }
+  .container {
+    padding: 1rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #webgpu-canvas {
+    height: 300px;
+  }
 }
 
 /* GPU 狀態指示器 */
 .status-indicator {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 0.5rem;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
 }
 
 .status-online { background-color: #10b981; }
@@ -120,71 +120,71 @@ body {
 
 /* 工具提示 */
 .tooltip {
-    position: relative;
-    cursor: help;
+  position: relative;
+  cursor: help;
 }
 
 .tooltip:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1f2937;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    z-index: 1000;
-    border: 1px solid #374151;
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 1000;
+  border: 1px solid #374151;
 }
 
 /* 滾動條樣式 */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #374151;
-    border-radius: 4px;
+  background: #374151;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #6b7280;
-    border-radius: 4px;
+  background: #6b7280;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
+  background: #9ca3af;
 }
 
 /* 按鈕動畫 */
 button {
-    transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 /* 載入動畫 */
 .loading-spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

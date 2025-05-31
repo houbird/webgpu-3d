@@ -72,14 +72,14 @@
 
 ```plaintext
 webgpu-benchmark/
-├── index.html           # 主頁與 Canvas 容器
-├── styles.css           # 自定義樣式（含 Tailwind CDN）
-├── main.js              # 應用入口，初始化 WebGPU
-├── benchmark.js         # 跑分邏輯模組
-├── model-loader.js      # 模型加載邏輯
-├── utils.js             # 公用工具函數
-├── /assets/             # 靜態資源（範例模型、圖片）
-└── README.md            # 專案說明
+├── index.html       # 主頁與 Canvas 容器
+├── styles.css       # 自定義樣式（含 Tailwind CDN）
+├── main.js        # 應用入口，初始化 WebGPU
+├── benchmark.js     # 跑分邏輯模組
+├── model-loader.js    # 模型加載邏輯
+├── utils.js       # 公用工具函數
+├── /assets/       # 靜態資源（範例模型、圖片）
+└── README.md      # 專案說明
 ```
 
 ---

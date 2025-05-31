@@ -4,35 +4,35 @@
   "description": "WebGPU 3D 性能跑分工具 - 基於 WebGPU 技術的 3D 模型渲染與 GPU 性能測試平台",
   "main": "index.html",
   "scripts": {
-    "start": "python -m http.server 8000",
-    "serve": "npx serve .",
-    "dev": "python -m http.server 8000",
-    "build": "echo 'This is a static site, no build needed'",
-    "deploy": "echo 'Deploy to GitHub Pages or your preferred hosting service'"
+  "start": "python -m http.server 8000",
+  "serve": "npx serve .",
+  "dev": "python -m http.server 8000",
+  "build": "echo 'This is a static site, no build needed'",
+  "deploy": "echo 'Deploy to GitHub Pages or your preferred hosting service'"
   },
   "keywords": [
-    "webgpu",
-    "3d",
-    "benchmark",
-    "three.js",
-    "gpu",
-    "performance",
-    "rendering"
+  "webgpu",
+  "3d",
+  "benchmark",
+  "three.js",
+  "gpu",
+  "performance",
+  "rendering"
   ],
   "author": "WebGPU 3D Team",
   "license": "MIT",
   "homepage": "https://github.com/your-username/webgpu-3d-benchmark",
   "repository": {
-    "type": "git",
-    "url": "https://github.com/your-username/webgpu-3d-benchmark.git"
+  "type": "git",
+  "url": "https://github.com/your-username/webgpu-3d-benchmark.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/webgpu-3d-benchmark/issues"
+  "url": "https://github.com/your-username/webgpu-3d-benchmark/issues"
   },
   "devDependencies": {
-    "serve": "^14.0.0"
+  "serve": "^14.0.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+  "node": ">=14.0.0"
   }
 }
